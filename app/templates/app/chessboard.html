@@ -1,0 +1,30 @@
+{% extends "app/layout.html" %}
+
+{% block content %}
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="chessboard">
+            {% for row in chessboard %}
+                {% for square in row %}
+                    <div class="square {% if forloop.parentloop.counter0|add:forloop.counter0|divisibleby:2 %}black{% else %}white{% endif %} {% if square == 'Q' %}queen{% endif %}"></div>
+                {% endfor %}
+            {% endfor %}
+        </div>
+    </div>
+</div>
+<div class="row"></div>
+<div class="row">
+    <div class="col-md-4">
+        <form action="/chessboard/" method="post">
+            {% csrf_token %}
+            {{ form }}
+            <input type="submit" value="Try it" class="btn btn-default" />
+            {% if form.errors %}
+            <p class="validation-summary-errors">Please enter a correct queen position (numberic and 8 digits).</p>
+            {% endif %}
+        </form>
+    </div>
+</div>
+
+{% endblock %}
